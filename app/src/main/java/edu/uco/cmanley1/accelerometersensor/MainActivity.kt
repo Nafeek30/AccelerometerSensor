@@ -7,18 +7,25 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.text.format.Time
 import android.widget.Toast
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
+import java.sql.Timestamp
 
 class MainActivity : Activity(), SensorEventListener
 {
     private lateinit var sensorManager: SensorManager
     private lateinit var accelerometer: Sensor
 
+    private var db: FirebaseFirestore? = null
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        db = FirebaseFirestore.getInstance()
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -49,6 +56,18 @@ class MainActivity : Activity(), SensorEventListener
             }
         }
 
+
+        btn_test.setOnClickListener {
+            /* test */
+            val coord = CoordinateSet(0.0, 0.1, 0.2, Timestamp(System.currentTimeMillis()))
+            db?.collection("Coordinates")?.document()?.set(coord)
+                    ?.addOnSuccessListener {
+                        Toast.makeText(this, "YEAHYAHBOYEE", Toast.LENGTH_SHORT).show()
+                    }
+                    ?.addOnFailureListener {
+                        Toast.makeText(this, "nope.", Toast.LENGTH_SHORT).show()
+                    }
+        }
 
     }
 

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "113126356925",
+    "firebase_url": "https://accelerometerreader-f868a.firebaseio.com",
+    "project_id": "accelerometerreader-f868a",
+    "storage_bucket": "accelerometerreader-f868a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113126356925:android:4f44cacd95018c46",
+        "android_client_info": {
+          "package_name": "edu.uco.cmanley1.accelerometersensor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113126356925-7ab8jm8upthl2d2bveog4ocbvbkd0jkg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.uco.cmanley1.accelerometersensor",
+            "certificate_hash": "375afd7aeaa5fb953a8cebed001b6b89a79dce3f"
+          }
+        },
+        {
+          "client_id": "113126356925-6jmshji10hrtgg5toh6h87srhjotdqp7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6vaqv7dYxCBCSPBF7wi5g0XaGrQhDlLI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113126356925-6jmshji10hrtgg5toh6h87srhjotdqp7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
