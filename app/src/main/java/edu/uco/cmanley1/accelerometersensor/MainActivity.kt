@@ -7,7 +7,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.text.format.Time
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
@@ -78,8 +77,12 @@ class MainActivity : Activity(), SensorEventListener
 
     override fun onSensorChanged(event: SensorEvent?)
     {
-        txt_xCoord.text = event!!.values[0].toString()
-        txt_yCoord.text = event!!.values[1].toString()
-        txt_zCoord.text = event!!.values[2].toString()
+        // figure out how many coordinate sets we send to Firebase / second
+        // do logic
+        // send all the things.
+        // amen.
+        txt_xCoord.text = event!!.values[0].toString()  //x
+        txt_yCoord.text = event!!.values[1].toString()  //y
+        txt_zCoord.text = event!!.values[2].toString()  //z
     }
 }
