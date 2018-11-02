@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Accelerometer Sensor</string>
+    <string name="lbl_x">X</string>
+    <string name="lbl_y">Y</string>
+    <string name="lbl_z">Z</string>
+    <string name="lbl_delayUI">UI</string>
+    <string name="lbl_delayNormal">Normal</string>
+    <string name="lbl_delayGame">Game</string>
+    <string name="lbl_delayFastest">Fastest</string>
+</resources>
