@@ -84,18 +84,29 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_yCoord"
         app:layout_constraintVertical_bias="0.085" />
 
+    <View
+        android:id="@+id/view2"
+        style="@style/Divider"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_z" />
+
     <RadioGroup
         android:id="@+id/grp_delays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:checkedButton="@+id/rdo_delayNormal"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_z">
+        app:layout_constraintTop_toBottomOf="@+id/view2">
 
         <RadioButton
             android:id="@+id/rdo_delayUI"
@@ -126,15 +137,60 @@
             android:text="@string/lbl_delayFastest" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/btn_test"
-        android:layout_width="86dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+    <View
+        android:id="@+id/view"
+        style="@style/Divider"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/lbl_test"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tgl_record"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grp_delays"
+        app:layout_constraintVertical_bias="0.147" />
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="48dp"
+        android:text="@string/lbl_upload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/tgl_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        android:textOff="@string/lbl_record"
+        android:textOn="@string/lbl_stop"
+        app:layout_constraintBottom_toTopOf="@+id/btn_upload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grp_delays" />
+
+    <Switch
+        android:id="@+id/switch_saveLocal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/lbl_saveFile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_upload"
+        app:layout_constraintTop_toBottomOf="@+id/tgl_record"
+        app:layout_constraintVertical_bias="0.468" />
 </android.support.constraint.ConstraintLayout>
