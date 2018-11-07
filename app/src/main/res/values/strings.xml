@@ -7,17 +7,18 @@
     <string name="lbl_delayNormal">Normal</string>
     <string name="lbl_delayGame">Game</string>
     <string name="lbl_delayFastest">Fastest</string>
-    <string name="lbl_test">Test</string>
     <string name="lbl_record">Record</string>
     <string name="lbl_stop">Stop</string>
     <string name="lbl_upload">Upload</string>
     <string name="lbl_save">Save</string>
     <string name="err_uploadSuccess">Upload Successful!</string>
-    <string name="err_saveSuccess">Save Successful!</string>
     <string name="err_emptyData">No recorded data available...</string>
     <string name="lbl_saveFile">Save as CSV</string>
     <string name="msg_saveLocally">Settings Changed: Save data to local storage as CSV</string>
     <string name="msg_cloudOnly">Settings Changed: Upload data to cloud storage.</string>
-    <string name="err_filePath">Saved to: %1$s</string>
+    <string name="err_saveSuccess">Saved to: %s</string>
     <string name="err_saveFail">Save Failed!</string>
+    <string name="file_name">%s.csv</string>
+    <string name="dir_data">recorded_data</string>
+    <string name="collectionPath">CoordinateSets</string>
 </resources>
