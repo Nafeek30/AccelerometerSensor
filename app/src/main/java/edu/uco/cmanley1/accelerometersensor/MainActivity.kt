@@ -21,6 +21,7 @@ class MainActivity : Activity(), SensorEventListener
     private lateinit var db: FirebaseFirestore
 
     private var coordinateSets = ArrayList<CoordinateSet>()
+    private var hasUploadedOrSaved = false
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -64,6 +65,12 @@ class MainActivity : Activity(), SensorEventListener
         tgl_record.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked)
             {
+                if(hasUploadedOrSaved)
+                {
+                    coordinateSets.clear()
+                    hasUploadedOrSaved = false
+                }
+
                 when (grp_delays.checkedRadioButtonId)
                 {
                     rdo_delayUI.id -> {
@@ -160,6 +167,9 @@ class MainActivity : Activity(), SensorEventListener
             db.collection(getString(R.string.collectionPath))
                 .document(Timestamp(coordinateSet.timestamp).toString())
                 .set(coordinateSet)
+                    .addOnSuccessListener {
+                        hasUploadedOrSaved = true
+                    }
                     .addOnFailureListener { ex: Exception ->
                         Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show()
                         success = false
@@ -198,6 +208,7 @@ class MainActivity : Activity(), SensorEventListener
 
             Toast.makeText(this, getString(R.string.err_saveSuccess, file.toString()),
                     Toast.LENGTH_LONG).show()
+            hasUploadedOrSaved = true
         }
         catch(ex: Exception)
         {
