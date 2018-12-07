@@ -162,19 +162,22 @@ class MainActivity : Activity(), SensorEventListener
     {
         var success = true
 
-        for(coordinateSet in coordinateSets)
-        {
-            db.collection(getString(R.string.collectionPath))
-                .document(Timestamp(coordinateSet.timestamp).toString())
-                .set(coordinateSet)
-                    .addOnSuccessListener {
-                        hasUploadedOrSaved = true
-                    }
-                    .addOnFailureListener { ex: Exception ->
-                        Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show()
-                        success = false
-                    }
+        val document =  object {
+            var coordinateSets = ArrayList<CoordinateSet>()
         }
+
+        document.coordinateSets = coordinateSets
+
+        db.collection(getString(R.string.collectionPath))
+            .document(System.currentTimeMillis().toString())
+            .set(document)
+            .addOnSuccessListener {
+                hasUploadedOrSaved = true
+            }
+            .addOnFailureListener { ex: Exception ->
+                Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show()
+                success = false
+            }
 
         if(success)
             Toast.makeText(this, R.string.err_uploadSuccess, Toast.LENGTH_SHORT).show()
