@@ -21,4 +21,6 @@
     <string name="file_name">%s.csv</string>
     <string name="dir_data">recorded_data</string>
     <string name="collectionPath">CoordinateSets</string>
+    <string name="collectionPath2">CSV</string>
+    <string name="err_uploadError">Upload Failed!</string>
 </resources>

@@ -6,12 +6,21 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
+import java.io.FileInputStream
 import java.sql.Timestamp
+
+const val TAG = "local"
 
 class MainActivity : Activity(), SensorEventListener
 {
@@ -19,6 +28,9 @@ class MainActivity : Activity(), SensorEventListener
     private lateinit var accelerometer: Sensor
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
+
+    private lateinit var file: File
 
     private var coordinateSets = ArrayList<CoordinateSet>()
     private var hasUploadedOrSaved = false
@@ -29,6 +41,7 @@ class MainActivity : Activity(), SensorEventListener
         setContentView(R.layout.activity_main)
 
         db = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -162,22 +175,67 @@ class MainActivity : Activity(), SensorEventListener
     {
         var success = true
 
-        val document =  object {
-            var coordinateSets = ArrayList<CoordinateSet>()
-        }
+        if(saveData())
+        {
+            try {
+                val stream = FileInputStream(file)
+                val ref = storage.reference.child(file.name)
+                val uploadTask = ref.putStream(stream)
+                val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot,
+                        Task<Uri>> { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    return@Continuation ref.downloadUrl
+                }).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val csv = CSV(file.name, System.currentTimeMillis(), task.result.toString())
 
-        document.coordinateSets = coordinateSets
-
-        db.collection(getString(R.string.collectionPath))
-            .document(System.currentTimeMillis().toString())
-            .set(document)
-            .addOnSuccessListener {
-                hasUploadedOrSaved = true
+                        try {
+                            db.collection(getString(R.string.collectionPath2)).document(file.name)
+                                    .set(csv)
+                                    .addOnSuccessListener {
+                                        hasUploadedOrSaved = true
+                                    }
+                                    .addOnFailureListener { ex: Exception ->
+                                        Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show()
+                                        success = false
+                                    }
+                        }
+                        catch(ex: Exception)
+                        {
+                            Log.d(TAG, ex.toString())
+                        }
+                    } else {
+                        Toast.makeText(this, R.string.err_uploadError, Toast.LENGTH_LONG).show()
+                        success = false
+                    }
+                }
             }
-            .addOnFailureListener { ex: Exception ->
+            catch(ex: Exception)
+            {
                 Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show()
                 success = false
             }
+        }
+//        val document =  object {
+//            var coordinateSets = ArrayList<CoordinateSet>()
+//        }
+//
+//        document.coordinateSets = coordinateSets
+//
+//        db.collection(getString(R.string.collectionPath))
+//            .document(System.currentTimeMillis().toString())
+//            .set(document)
+//            .addOnSuccessListener {
+//                hasUploadedOrSaved = true
+//            }
+//            .addOnFailureListener { ex: Exception ->
+//                Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show()
+//                success = false
+//            }
 
         if(success)
             Toast.makeText(this, R.string.err_uploadSuccess, Toast.LENGTH_SHORT).show()
@@ -195,7 +253,7 @@ class MainActivity : Activity(), SensorEventListener
 
             if (!dir.exists())
                 dir.mkdirs()
-            val file = File(dir, getString(R.string.file_name,
+            file = File(dir, getString(R.string.file_name,
                     Timestamp(System.currentTimeMillis()).toString()))
 
             for (coordinateSet in coordinateSets) {
